@@ -35,15 +35,15 @@ import Navbar from "@/components/Navbar";
 import { ContactFormRequest, ContactFormResponse } from "@shared/api";
 
 const fadeInUp = {
-  initial: { opacity: 0, y: 80 },
+  initial: { opacity: 0, y: 100 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] },
+  transition: { duration: 2, ease: [0.215, 0.61, 0.355, 1] },
 };
 
 const staggerContainer = {
   animate: {
     transition: {
-      staggerChildren: 0.15,
+      staggerChildren: 0.25,
     },
   },
 };
