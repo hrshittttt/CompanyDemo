@@ -10,3 +10,19 @@
 export interface DemoResponse {
   message: string;
 }
+
+/**
+ * Contact form request and response types
+ */
+export interface ContactFormRequest {
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  message: string;
+}
+
+export interface ContactFormResponse {
+  success: boolean;
+  message: string;
+}
