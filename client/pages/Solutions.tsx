@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import {
   Train,
   Zap,
-  Bridge,
+  Construction,
   Settings,
   Clock,
   Shield,
@@ -98,7 +98,7 @@ export default function Solutions() {
                   scope: "1000+ km electrified yearly",
                 },
                 {
-                  icon: Bridge,
+                  icon: Construction,
                   title: "Bridge & Tunnel Construction",
                   description:
                     "Specialized construction of railway bridges, viaducts, and tunnels for challenging terrain and water crossings.",
