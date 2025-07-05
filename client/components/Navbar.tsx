@@ -1,69 +1,84 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import ThemeToggle from "./ThemeToggle";
 
 const navigationItems = [
-  { name: "Home", href: "/" },
-  { name: "Company", href: "/company" },
-  { name: "Technology", href: "/technology" },
-  { name: "Solutions", href: "/solutions" },
-  { name: "Clients", href: "/clients" },
-  { name: "Contact Us", href: "/contact" },
+  { name: "Home", href: "#home" },
+  { name: "Company", href: "#company" },
+  { name: "Technology", href: "#technology" },
+  { name: "Solutions", href: "#solutions" },
+  { name: "Clients", href: "#clients" },
+  { name: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
+  const [activeSection, setActiveSection] = useState("home");
+
+  const scrollToSection = (href: string) => {
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      setIsOpen(false);
+    }
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
+          <button
+            onClick={() => scrollToSection("#home")}
+            className="flex items-center space-x-2"
+          >
             <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
               <div className="w-4 h-4 bg-accent-foreground rounded-sm"></div>
             </div>
             <span className="text-xl font-semibold text-foreground">
               RailConstruct
             </span>
-          </Link>
+          </button>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navigationItems.map((item) => (
-              <Link
+              <button
                 key={item.name}
-                to={item.href}
+                onClick={() => scrollToSection(item.href)}
                 className={cn(
                   "text-sm font-medium transition-colors duration-200 relative py-2",
-                  location.pathname === item.href
+                  activeSection === item.href.substring(1)
                     ? "text-foreground"
                     : "text-muted-foreground hover:text-foreground",
                 )}
               >
                 {item.name}
-                {location.pathname === item.href && (
+                {activeSection === item.href.substring(1) && (
                   <motion.div
                     className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent"
                     layoutId="activeTab"
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   />
                 )}
-              </Link>
+              </button>
             ))}
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-foreground hover:text-muted-foreground p-2"
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+          <div className="flex items-center space-x-4">
+            <ThemeToggle />
+
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="text-foreground hover:text-muted-foreground p-2"
+              >
+                {isOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -77,19 +92,18 @@ export default function Navbar() {
           >
             <div className="flex flex-col space-y-3">
               {navigationItems.map((item) => (
-                <Link
+                <button
                   key={item.name}
-                  to={item.href}
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => scrollToSection(item.href)}
                   className={cn(
-                    "text-sm font-medium transition-colors duration-200 py-2 px-3 rounded-lg",
-                    location.pathname === item.href
+                    "text-sm font-medium transition-colors duration-200 py-2 px-3 rounded-lg text-left",
+                    activeSection === item.href.substring(1)
                       ? "text-foreground bg-muted"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted",
                   )}
                 >
                   {item.name}
-                </Link>
+                </button>
               ))}
             </div>
           </motion.div>
